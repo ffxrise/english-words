@@ -1,13 +1,12 @@
 package com.ffx.englishwords.domain;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -30,13 +29,5 @@ public class Level implements Serializable {
 
     private String level;
 
-    private String levelName;
 
-    public Level(String level, String levelName) {
-        this.level = level;
-        this.levelName = levelName;
-    }
-
-    public Level() {
-    }
 }

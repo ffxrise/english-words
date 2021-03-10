@@ -14,25 +14,21 @@
 <body>
 <div style="padding: 20px;">
     <form id="main-form" method="post" enctype="multipart/form-data" novalidate>
-        <%--<div style="margin-bottom: 20px">
+        <div style="margin-bottom: 20px">
             <label>
-                <input class="easyui-filebox"
-                       id="file"
-                       name="file"
-                       iconWidth="28"
-                       prompt="请选择文件"
-                       data-options="label:'文件:',required:true,accept:'image/jpeg,image/png,image/gif'"
-                       missingMessage="不能为空"
-                       style="width: 300px; height: 34px; padding: 10px;">
-            </label>
-        </div>--%>
-            <div style="margin-bottom: 20px">
-                <label>
-                    <select name="level" id="level" type="text" class="easyui-combobox" data-options="label:'等级:',editable:false,valueField:'id', textField:'text'" style="width: 300px; height: 34px; padding: 10px;">
+                <select name="level" id="level" type="text" class="easyui-combobox"
+                        data-options="label:'等级:',editable:false,
+                            editable:false,panelHeight:'auto',
+                            valueField:'id',
+                            textField:'level',
+                            url:'${pageContext.request.contextPath}/level/getAll',
+                            method:'get',
+                            onLoadSuccess:function(data){ $('#level').combobox('setValue',data[0].id)}"
+                        style="width: 300px; height: 34px; padding: 10px;">
 
-                    </select>
-                </label>
-            </div>
+                </select>
+            </label>
+        </div>
         <div style="margin-bottom: 20px">
             <label>
                 <input class="easyui-textbox"
@@ -50,7 +46,7 @@
                        id="mean"
                        name="mean"
                        prompt="苹果" iconWidth="28"
-                       data-options="label:'系列:',required:true"
+                       data-options="label:'中文:',required:true"
                        missingMessage="不能为空"
                        style="width: 300px; height: 34px; padding: 10px;">
             </label>
@@ -72,16 +68,23 @@
                        id="root"
                        name="root"
                        prompt="ful" iconWidth="28"
-                       data-options="label:'词根词缀:'"
+                       data-options="label:'词根词缀:'}"
                        style="width: 300px; height: 34px; padding: 10px;">
             </label>
         </div>
-        <div style="margin-bottom: 20px">
-
+        <div style="margin-bottom: 20px;display: none;">
+            <label>
+                <select name="rootMean" id="rootMean" type="text" class="easyui-combobox"
+                        data-options="label:'词根意思:',editable:false,
+                            editable:false,panelHeight:'auto',
+                            url:'${pageContext.request.contextPath}/level/getAll',
+                            method:'get',
+                            onLoadSuccess:function(data){ $('#level').combobox('setValue',data[0].id)}"
+                        style="width: 300px; height: 34px; padding: 10px;">
+                </select>
+            </label>
         </div>
-        <div style="margin-bottom: 20px">
 
-        </div>
     </form>
     <div style="text-align: center; padding: 5px 0">
         <a href="javascript:void(0)" id="submit-btn"
@@ -92,27 +95,6 @@
 </div>
 <script type="text/javascript">
     $(function () {
-        $.ajax({
-            url:'${pageContext.request.contextPath}/level/getAll',
-            type:'get',
-            success:function(res){
-                if(res.code===0){
-                    var options = res.data;
-                    var data = [];
-                    $.each(options,function (i,value) {
-                        data.push({"text":value.levelName,"id":value.level});
-                    });
-                    $('#level').combobox("loadData",data);
-                }else{
-                    var showmsg = res.msg;
-                    $.messager.show({
-                        title: '提示',
-                        msg: showmsg
-                    });
-                }
-            }
-        });
-
         $('#submit-btn').click(function () {
             var data = new FormData($("#main-form")[0]);
 
@@ -150,8 +132,20 @@
         });
 
         $('#reset-btn').click(function () {
+            var level = $('#level').combobox('getValue');
             $('#main-form').form('clear');
+            $('#level').combobox('select', level);
         });
+
+        $('#root').onchange(function () {
+            $('#rootMean').combobox({
+                valueField:'id',
+                textField:'mean',
+                url:'${pageContext.request.contextPath}/level/getAll',
+                onLoadSuccess:function(data){ $('#level').combobox('setValue',data[0].id)}
+            });
+        });
+
     });
 
 

@@ -1,10 +1,14 @@
 package com.ffx.englishwords.controller;
 
-import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.stereotype.Controller;
+
 /**
- * 前端控制器
+ * <p>
+ *  前端控制器
+ * </p>
  *
  * @author ffx
  * @since 2021-03-10
@@ -12,6 +16,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/word")
 public class WordController {
-
 
 }

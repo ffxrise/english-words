@@ -2,7 +2,6 @@ package com.ffx.englishwords.service;
 
 import com.ffx.englishwords.domain.Level;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.springframework.stereotype.Service;
 
 /**
  * <p>
